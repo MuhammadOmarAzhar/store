@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import {css} from '@emotion/react';
-import {DotLoader} from 'react-spinners';
 import {isEmpty} from 'lodash';
 import {toast} from 'react-toastify';
 import {COLLECTION_NAMES} from '@/firebase/constants';
@@ -8,6 +6,7 @@ import {firestore, storage} from '@/firebase-config';
 import {insertIntoCollection} from '@/firebase/functions';
 import moment from 'moment';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import {Grid} from 'react-loader-spinner';
 
 const AddItems = () => {
   const [loader, setLoader] = useState(false);
@@ -106,7 +105,7 @@ const AddItems = () => {
       <div className='bg-white shadow rounded-lg p-8 w-full md:w-[40%] h-full md:h-auto'>
         <div className='py-6 px-6 lg:px-8'>
           <h3 className='-mt-6 -ml-7 text-xl font-medium text-gray-900 text-center'>
-            Add posts
+            Add Items
           </h3>
         </div>
         <div className='flex items-center justify-center w-full'>
@@ -151,7 +150,7 @@ const AddItems = () => {
             <img
               src={`${localImageUrl}`}
               alt={'PostImage'}
-              className='max-h-[400px] max-w-[500px] rounded-lg'
+              className='max-h-[200px] max-w-[300px] rounded-lg'
             />
           )}
         </div>
@@ -169,7 +168,7 @@ const AddItems = () => {
         </div>
         <div className='my-4'>
           <label className='blockmb-2 text-sm font-medium text-gray-900'>
-            {'Price'}
+            {'Price (Rs.)'}
           </label>
           <input
             type='text'
@@ -197,14 +196,18 @@ const AddItems = () => {
           disabled={loader}
         >
           {loader ? (
-            <DotLoader
-              color={'#ffffff'}
-              loading={true}
-              css={css`
-                display: block;
-                margin: 0 auto;
-              `}
-            />
+            <div className='flex justify-center items-center'>
+              <Grid
+                height='30'
+                width='30'
+                color='#FFFFFF'
+                ariaLabel='grid-loading'
+                radius='12.5'
+                wrapperStyle={{}}
+                wrapperClass=''
+                visible={true}
+              />
+            </div>
           ) : (
             'Add Item'
           )}
