@@ -2,8 +2,16 @@ import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React from 'react';
+import {useSelector} from 'react-redux';
 
 const Header = () => {
+  const cartItems = useSelector((state) => state.cart);
+
+  const totalQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <header className='bg-gray-800 text-white p-4 flex justify-between items-center'>
       <div>
@@ -28,10 +36,16 @@ const Header = () => {
       </div>
 
       <div>
-        <FontAwesomeIcon
-          icon={faShoppingCart}
-          className='text-xl cursor-pointer'
-        />
+        <Link href='/cart'>
+          <div className='flex items-center text-xl cursor-pointer'>
+            <FontAwesomeIcon icon={faShoppingCart} />
+            {totalQuantity > 0 && (
+              <span className='bg-red-500 text-white rounded-full px-2 ml-1'>
+                {totalQuantity}
+              </span>
+            )}
+          </div>
+        </Link>
       </div>
     </header>
   );

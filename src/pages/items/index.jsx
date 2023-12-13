@@ -5,10 +5,20 @@ import {fetchCollection} from '@/firebase/functions';
 import {isEmpty, orderBy} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
+import {useSelector, useDispatch} from 'react-redux';
+import {addToCart} from '@/redux/cartSlice';
 
 const Items = () => {
   const [loader, setLoader] = useState(true);
   const [itemList, setItemList] = useState([]);
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
+
+  const handleAddToCart = (item) => {
+    dispatch(addToCart({id: item.id, details: item}));
+    toast.success('Item added to the cart!', {position: 'top-center'});
+  };
 
   const fetchItems = async () => {
     try {
@@ -55,6 +65,12 @@ const Items = () => {
                       {res.description}
                     </p>
                     <p className='text-orange-600'>Rs. {res.price}</p>
+                    <button
+                      className='bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mt-4'
+                      onClick={() => handleAddToCart(res)}
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               );
