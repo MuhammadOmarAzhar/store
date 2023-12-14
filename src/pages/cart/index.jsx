@@ -1,8 +1,10 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeFromCart} from '@/redux/cartSlice';
+import {useRouter} from 'next/router';
 
 const Cart = () => {
+  const router = useRouter();
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -14,6 +16,10 @@ const Cart = () => {
     const {details, quantity} = item;
     return total + (details.price || 0) * quantity;
   }, 0);
+
+  const handleCheckout = () => {
+    router.push(`/checkout?totalAmount=${totalAmount}`);
+  };
 
   return (
     <div className='bg-gray-300 h-screen p-8'>
@@ -53,9 +59,15 @@ const Cart = () => {
                 </div>
               );
             })}
-            <div className='mt-4'>
+            <div className='mt-4 grid grid-cols-1'>
               <p className='font-semibold text-black'>Total Amount:</p>
-              <p className='text-orange-600'>Rs. {totalAmount}</p>
+              <p className='text-orange-600 mb-2'>Rs. {totalAmount}</p>
+              <button
+                onClick={handleCheckout}
+                className='bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded'
+              >
+                Proceed to Checkout
+              </button>
             </div>
           </div>
         )}
