@@ -41,7 +41,7 @@ const Cart = () => {
                   <img
                     src={details.image_url}
                     alt={details.title}
-                    className='w-16 h-16 object-cover mr-4 rounded'
+                    className='w-28 h-28 object-cover mr-4 rounded'
                   />
                   <div className='flex-1'>
                     <h3 className='font-semibold text-black'>
@@ -51,7 +51,7 @@ const Cart = () => {
                     <p className='text-gray-600'>Quantity: {quantity}</p>
                     <button
                       onClick={() => handleRemoveItem(item.id)}
-                      className='text-red-500 underline cursor-pointer'
+                      className='text-red-500 hover:text-red-700 underline cursor-pointer'
                     >
                       Remove
                     </button>
@@ -59,7 +59,7 @@ const Cart = () => {
                 </div>
               );
             })}
-            <div className='mt-4 grid grid-cols-1'>
+            <div className='mt-4 grid grid-cols-1 w-full text-end'>
               <p className='font-semibold text-black'>Total Amount:</p>
               <p className='text-orange-600 mb-2'>Rs. {totalAmount}</p>
               <button
